@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        /* Styling for the date navigation and chart section */
+        .date-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .date-button {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            transition: background-color 0.3s;
+        }
+
+        .date-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .chart-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .chart {
+            width: 80%;
+            height: 400px;
+            background-color: #1a1a1a;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .chart p {
+            color: #fff;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .filter-options {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .filter-options label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Calendar styling */
+        #calendar {
+            display: none;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: fit-content;
+            background-color: #f9f9f9;
+        }
+
+        #calendar table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        #calendar th, #calendar td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+    <h1 style="text-align: center;">Activity</h1>
+    <div class="date-navigation">
+        <button class="date-button">◀</button>
+        <button class="date-button" id="today-button">Today</button>
+        <button class="date-button">▶</button>
+    </div>
+
+    <div id="calendar">
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+            <input type="text" id="month-input" placeholder="Month" style="width: 100px; margin-right: 10px;">
+            <input type="number" id="year-input" min="2020" placeholder="Year" style="width: 80px;">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body">
+                <!-- Calendar days will be generated here -->
+                <tr>
+                    <td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td>
+                </tr>
+                <tr>
+                    <td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+                </tr>
+                <tr>
+                    <td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+                </tr>
+                <tr>
+                    <td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+                </tr>
+                <tr>
+                    <td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="filter-options">
+        <label><input type="radio" name="filter" value="kWh Usage"> kWh Usage</label>
+        <label><input type="radio" name="filter" value="Solar Production" checked> Solar Production</label>
+    </div>
+    <script>
+        document.querySelectorAll('input[name="filter"]').forEach(function(filter) {
+            filter.addEventListener('change', function() {
+                document.querySelector('.chart-container h2').textContent = this.value;
+                if (this.value === 'kWh Usage') {
+                    document.getElementById('device-table').style.display = 'block';
+                    document.getElementById('panel-table').style.display = 'none';
+                } else {
+                    document.getElementById('device-table').style.display = 'none';
+                    document.getElementById('panel-table').style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+    <div class="chart-container">
+        <h2>Solar Production</h2>
+        <div class="chart" style="background-color: #1a1a1a; display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; height: 100%;">
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    SUN
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    MON
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    TUE
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    WED
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    THU
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                    FRI
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+                <div style="flex: 1; text-align: center; color: #fff; position: relative;">
+                    SAT
+                    <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="sort-container" style="text-align: center; margin-top: 20px;">
+        <select id="sort-by">
+            <option value="asc">Sort By (Ascending)</option>
+            <option value="desc">Sort By (Descending)</option>
+        </select>
+        <button class="date-button" id="search-button">Search</button>
+    </div>
+
+    <div id="device-table" style="display: none; margin-top: 20px; text-align: center;">
+        <table style="width: 80%; margin: 0 auto; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Device</th>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Power Draw</th>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Port #</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically filled -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="panel-table" style="display: none; margin-top: 20px; text-align: center;">
+        <table style="width: 80%; margin: 0 auto; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Panel #</th>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Power Produced</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically filled -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const calendar = $('#calendar');
+            const yearInput = $('#year-input');
+
+            // Show calendar when the 'Today' button is clicked
+            $('#today-button').on('click', function () {
+                calendar.toggle();
+            });
+
+            // Validate year input to be 2020 or above
+            function validateYear() {
+                const year = parseInt(yearInput.val());
+                if (year && year >= 2020) {
+                    yearInput[0].setCustomValidity('');
+                } else {
+                    yearInput[0].setCustomValidity('Year must be 2020 or above');
+                }
+            }
+
+            yearInput.on('input', validateYear);
+
+            // Sort table by ascending or descending order
+            $('#sort-by').on('change', function() {
+                let order = $(this).val();
+                let table = $("#device-table tbody:visible, #panel-table tbody:visible");
+                let rows = table.find("tr").get();
+
+                rows.sort(function(a, b) {
+                    let A = $(a).find("td:eq(1)").text();
+                    let B = $(b).find("td:eq(1)").text();
+
+                    if (order === "asc") {
+                        return A < B ? -1 : A > B ? 1 : 0;
+                    } else {
+                        return A > B ? -1 : A < B ? 1 : 0;
+                    }
+                });
+
+                $.each(rows, function(index, row) {
+                    table.append(row);
+                });
+            });
+
+            // Show input for search functionality
+            $('#search-button').on('click', function() {
+                let searchValue = prompt("Enter text to search:");
+                if (searchValue) {
+                    let table = $("#device-table tbody:visible, #panel-table tbody:visible");
+                    table.find("tr").each(function() {
+                        let rowText = $(this).text().toLowerCase();
+                        if (rowText.includes(searchValue.toLowerCase())) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

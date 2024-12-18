@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        /* Profile Picture and Name styling */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d0d0d0;
+            background-image: url('path/to/your/image.jpg');
+            background-size: cover;
+            background-position: center;
+            margin-right: 20px;
+        }
+
+        /* General styling for the navigation links */
+        .navigation-links {
+            float: left;
+            width: 15%;
+            margin-left: 20px;
+            margin-top: 85px;
+        }
+
+        .navigation-links a {
+            display: block;
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .navigation-links a:hover {
+            color: #5002f9;
+        }
+
+        /* Account Management styling */
+        .account-management {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+
+        .account-management-header {
+            text-align: center;
+        }
+
+        .account-item {
+            margin-bottom: 20px;
+        }
+
+        .account-item label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d0d0d0;
+            border-radius: 5px;
+        }
+
+        .two-factor-auth {
+            display: flex;
+            align-items: center;
+        }
+
+        .invite-options {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .account-table {
+            margin: 0 auto;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        .account-table td {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-picture" id="user-profile-picture" style="background-image: url('path/to/your/image.jpg');"></div>
+        <h4 id="user-name"></h4>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set User Domain ID dynamically from local storage
+            const domainName = localStorage.getItem('domainName') || 'User Domain ID';
+            document.getElementById('user-name').textContent = domainName;
+        });
+    </script>
+
+    <div class="navigation-links">
+        <a href="profile.html">Community List</a><br>
+        <div id="add-member-link" style="display: none;">
+            <a href="#" onclick="showAddMemberOverlay()">Add New Member</a><br>
+        </div>
+        <a href="badges.html">Badges</a><br>
+        <a href="messages.html">Messages</a><br>
+        <a href="census.html">Census</a><br>
+        <a href="settings.html">Settings</a><br>
+    </div>
+
+    <h2 class="account-management-header">Account Management</h2>
+    <table class="account-table">
+        <tr>
+            <td>
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="domain-id" style="text-align: left;">Domain ID</label>
+                    <input type="text" id="domain-id" class="input-field" value="" readonly>
+                </div>
+
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="domain-name" style="text-align: left;">Domain Name</label>
+                    <div class="account-item" style="display: flex; align-items: center;">
+                        <input type="text" id="domain-name" class="input-field" value="" readonly>
+                        <img src="path/to/pen-icon.png" alt="Edit" class="edit-icon" style="cursor: pointer; width: 20px; height: 20px; margin-left: 10px;">
+                    </div>
+                </div>
+
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="rookery-number" style="text-align: left;">Rookery Number</label>
+                    <input type="text" id="rookery-number" class="input-field" value="R16" readonly>
+                </div>
+
+                <div class="account-item">
+                    <label for="rookery-map">Rookery Map</label>
+                    <button class="profile-button" id="rookery-map" style="background-color: red;">Update coming...</button>
+                </div>
+
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="password" style="text-align: left;">Password</label>
+                    <div class="account-item" style="display: flex; align-items: center;">
+                        <input type="password" id="password" class="input-field" value="" readonly>
+                        <img src="path/to/pen-icon.png" alt="Edit" class="edit-icon" style="cursor: pointer; width: 20px; height: 20px; margin-left: 10px;">
+                    </div>
+                </div>
+
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="account-email" style="text-align: left;">Email</label>
+                    <div class="account-item" style="display: flex; align-items: center;">
+                        <input type="email" id="account-email" class="input-field" value="" readonly>
+                        <img src="path/to/pen-icon.png" alt="Edit" class="edit-icon" style="cursor: pointer; width: 20px; height: 20px; margin-left: 10px;">
+                    </div>
+                </div>
+
+                <div class="account-item" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="account-phone" style="text-align: left;">Phone</label>
+                    <div class="account-item" style="display: flex; align-items: center;">
+                        <input type="tel" id="account-phone" class="input-field" value="" readonly>
+                        <img src="path/to/pen-icon.png" alt="Edit" class="edit-icon" style="cursor: pointer; width: 20px; height: 20px; margin-left: 10px;">
+                    </div>
+                </div>
+
+                <div class="account-item two-factor-auth">
+                    <label for="two-factor-auth">Two Factor Authentication</label>
+                    <button class="profile-button" id="two-factor-auth" style="background-color: green;">ON</button>
+                </div>
+
+                <div class="invite-options">
+                    <label style="font-weight: bold; text-align: left;">Who can invite me for a challenge:</label>
+                    <div style="text-align: left; display: column; flex-direction: left; gap: 10px;">
+                        <input type="radio" name="invite-options" value="anyone" checked> Anyone<br>
+                        <input type="radio" name="invite-options" value="community-list"> People on my community list<br>
+                        <input type="radio" name="invite-options" value="no-one"> No-one<br>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        // Functionality for adding a new member (if required in the future)
+        function showAddMemberOverlay() {
+            alert("Add member functionality coming soon!");
+        }
+
+        // Auto-fill fields from localStorage and make them read-only
+        window.onload = function() {
+            const domainId = localStorage.getItem('domainId') || '';
+            if (domainId) {
+                document.getElementById('domain-id').value = domainId;
+            }
+
+            const domainName = localStorage.getItem('domainName') || '';
+            if (domainName) {
+                document.getElementById('domain-name').value = domainName;
+            }
+
+            const userPassword = localStorage.getItem('password') || '';
+            if (userPassword) {
+                document.getElementById('password').value = userPassword;
+            }
+
+            const email = localStorage.getItem('email') || '';
+            if (email) {
+                document.getElementById('account-email').value = email;
+            }
+
+            const phoneNumber = localStorage.getItem('phoneNumber') || '';
+            if (phoneNumber) {
+                document.getElementById('account-phone').value = phoneNumber;
+            }
+        };
+
+        // Set user profile picture and name
+        document.getElementById('user-profile-picture').style.backgroundImage = `url('path/to/your/image.jpg')`;
+        document.getElementById('user-name').textContent = localStorage.getItem('domainName') || document.getElementById('domain-id').value || 'User Domain ID';
+    </script>
+</body>
+</html>

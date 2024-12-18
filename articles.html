@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles Homepage</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        /* Articles section styling */
+        .articles-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px; /* Reduced margin-top to decrease space between articles and filters */
+        }
+
+        .article-box {
+            width: 200px;
+            height: 200px;
+            background-color: #e0e0e0;
+            transition: transform 0.3s ease;
+            margin-right: 100px;
+        }
+
+        .article-box:hover {
+            transform: scale(1.05);
+        }
+
+        .filters {
+            float: left;
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 80px; /* Reduced margin-left to bring filters closer to the articles */
+            margin-top: 1px;
+        }
+            .article-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .article-summary {
+            margin-top: 10px;
+            margin-right: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+    
+     <div class="container">
+        <div class="header">
+            <h1 style="text-align: center; margin-left: 280px;">Articles</h1>
+        </div>
+
+    <div class="filters">
+        <label><input type="radio" name="filter" value="starred"> Starred Articles</label>
+        <label><input type="radio" name="filter" value="community"> Community Favs</label>
+    </div>
+
+    <div class="articles-container">
+        <div class="article-item" onclick="location.href='article1.html'">
+            <div class="article-box">
+                <img src="path/to/your/image.jpg" alt="Article Image" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article2.html'">
+            <div class="article-box">
+                <img src="path/to/your/image.jpg" alt="Article Image" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article3.html'">
+            <div class="article-box">
+                <img src="path/to/your/image.jpg" alt="Article Image" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article4.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article5.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article6.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article7.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article8.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+        <div class="article-item" onclick="location.href='article9.html'">
+            <div class="article-box"></div>
+            <p class="article-summary">A short summary of the blog post, 50 words or less.</p>
+        </div>
+    </div>
+    </div>
+    <script>
+        // JavaScript to filter content based on radio button selection
+        document.querySelectorAll('input[name="filter"]').forEach(function(filter) {
+            filter.addEventListener('change', function() {
+                // Logic for filtering content will go here
+                console.log('Filter selected:', this.value);
+            });
+        });
+    </script>
+</body>
+</html>

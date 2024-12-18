@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSequence_3</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .navigation {
+            display: flex;
+            align-items: center;
+        }
+        #backBtn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-right: 2px;
+            margin-left: 20px;
+            align-self: center;
+            position: relative;
+            top: -4.5px;
+        }
+        .buy-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .progress-bars {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .bar {
+            width: 20px;
+            height: 5px;
+            background-color: lightgray;
+        }
+        .bar.filled {
+            background-color: blue;
+        }
+
+        .buy-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        .final-price {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        #authorizeBtn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 20px;
+        }
+        #authorizeBtn:hover {
+            background-color: white;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="navigation">
+            <button id="backBtn" class="chevron">&#x276E;</button>
+            <div class="buy-progress">
+                <h2>Buy</h2>
+                <div class="progress-bars">
+                    <div class="bar filled"></div>
+                    <div class="bar filled"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buy-container">
+        <h1>Exchange Breakdown</h1>
+        <table>
+            <tbody>
+                <tr>
+                    <td>User Domain ID</td>
+                    <td id="userDomainId"></td>
+                </tr>
+                <tr>
+                    <td>Recipient Domain ID</td>
+                    <td id="recipientDomainId"></td>
+                </tr>
+                <tr>
+                    <td>Exchange</td>
+                    <td id="exchangePrice"></td>
+                </tr>
+                <tr>
+                    <td>Fees</td>
+                    <td>Included in rate</td>
+                </tr>
+                <tr>
+                    <td>Distance fee</td>
+                    <td id="distanceFee"></td>
+                </tr>
+                <tr>
+                    <td>Taxes</td>
+                    <td>₦0.00</td>
+                </tr>
+                <tr>
+                    <td>Market fee</td>
+                    <td>₦0.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="final-price" id="finalPrice"></div>
+        <button id="authorizeBtn">Authorize</button>
+    </div>
+
+    <script>
+        const userDomainIdElement = document.getElementById('userDomainId');
+        const recipientDomainIdElement = document.getElementById('recipientDomainId');
+        const exchangePriceElement = document.getElementById('exchangePrice');
+        const distanceFeeElement = document.getElementById('distanceFee');
+        const finalPriceElement = document.getElementById('finalPrice');
+
+        // Retrieve data from local storage
+        const userDomainId = localStorage.getItem('domainId');
+        const recipientDomainId = localStorage.getItem('selectedClientName');
+        const exchangePrice = localStorage.getItem('selectedClientPrice');
+        const spendLimit = localStorage.getItem('spendLimit');
+
+        // Set the content for each field
+        userDomainIdElement.textContent = userDomainId;
+        recipientDomainIdElement.textContent = recipientDomainId;
+        exchangePriceElement.textContent = `₦${spendLimit} for ${exchangePrice}`;
+
+        // Calculate fees
+        let distanceFee = recipientDomainId === 'World Market' ? 0.00 : (Math.random() * 0).toFixed(2);
+        distanceFeeElement.textContent = `₦${distanceFee}`;
+
+        // Calculate final price
+        const finalPrice = parseFloat(spendLimit.replace('₦', '')) + parseFloat(distanceFee);
+        finalPriceElement.textContent = `Final Price: ₦${finalPrice.toFixed(2)}`;
+
+        // Save data to local storage
+        localStorage.setItem('finalUserDomainId', userDomainId);
+        localStorage.setItem('finalRecipientDomainId', recipientDomainId);
+        localStorage.setItem('finalExchangePrice', exchangePriceElement.textContent);
+        localStorage.setItem('finalPrice', finalPriceElement.textContent);
+
+        document.getElementById('authorizeBtn').addEventListener('click', () => {
+            window.location.href = 'buy_page_4.html';
+        });
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = 'buy_page_2.html';
+        });
+    </script>
+</body>
+</html>

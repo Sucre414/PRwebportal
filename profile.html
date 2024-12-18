@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        /* General styling for the navigation links */
+        .navigation-links {
+            float: left;
+            width: 15%;
+            margin-left: 20px;
+            margin-top: 85px;
+        }
+
+        .navigation-links a {
+            display: block;
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .navigation-links a:hover {
+            color: #5002f9;
+        }
+
+        /* Profile Picture and Name styling */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d0d0d0;
+            background-image: url('path/to/your/image.jpg');
+            background-size: cover;
+            background-position: center;
+            margin-right: 20px;
+        }
+
+        /* Community List Table styling */
+        .community-list {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        .community-list th, .community-list td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .community-list th {
+            background-color: #f2f2f2;
+        }
+
+        .community-list-header {
+            text-align: center;
+        }
+
+        .sort-dropdown {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sort-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .sort-dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sort-dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sort-dropdown:hover .sort-dropdown-content {
+            display: block;
+        }
+
+        /* Add New Member styling */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Add New Member label styling */
+        #add-member-link a {
+            font-size: 13px;
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-picture" id="user-profile-picture" style="background-image: url('path/to/your/image.jpg');"></div>
+        <h4 id="user-name"></h4>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set User Domain ID dynamically from local storage
+            const domainName = localStorage.getItem('domainName') || 'User Domain ID';
+            document.getElementById('user-name').textContent = domainName;
+        });
+    </script>
+
+    <div class="navigation-links">
+        <a href="profile.html">Community List</a><br>
+        <div id="add-member-link" style="display: none;">
+            <a href="#" onclick="showAddMemberOverlay()">Add New Member</a><br>
+        </div>
+        <a href="badges.html">Badges</a><br>
+        <a href="messages.html">Messages</a><br>
+        <a href="census.html">Census</a><br>
+        <a href="settings.html">Settings</a><br>
+    </div>
+
+    <h2 class="community-list-header">Community List</h2>
+
+    <div class="sort-dropdown" style="float: right; margin-right: 2%;">
+        Sort By ▼
+        <div class="sort-dropdown-content">
+            <a href="#" onclick="sortTable('recent')">Recently added</a>
+            <a href="#" onclick="sortTable('alpha')">Alphabetical</a>
+            <a href="#" onclick="sortTable('freq')">Frequency</a>
+        </div>
+    </div>
+
+    <table class="community-list" id="community-list">
+        <thead>
+            <tr>
+                <th>Domain Name</th>
+                <th>Domain Action</th>
+                <th>Domain ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ABB</td>
+                <td>Both</td>
+                <td>F000GR01</td>
+            </tr>
+            <tr>
+                <td>DANGCEM</td>
+                <td>Both</td>
+                <td>F000GR01</td>
+            </tr>
+            <tr>
+                <td>World Market</td>
+                <td>Both</td>
+                <td>F007GR01</td>
+            </tr>
+            <tr>
+                <td>UBA</td>
+                <td>Both</td>
+                <td>F006GR01</td>
+            </tr>
+            <tr>
+                <td>House of Saud</td>
+                <td>Selling</td>
+                <td>F002GR01</td>
+            </tr>
+            <tr>
+                <td>WWT</td>
+                <td>Both</td>
+                <td>F005GR01</td>
+            </tr>
+            <tr>
+                <td>Vista</td>
+                <td>Both</td>
+                <td>F004GR01</td>
+            </tr>
+            <tr>
+                <td>Lucky P</td>
+                <td>Both</td>
+                <td>F003GR01</td>
+            </tr>
+            <tr>
+                <td>F150SR15</td>
+                <td>Buying</td>
+                <td>F150SR15</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Overlay for adding new member -->
+    <div class="overlay" id="add-member-overlay">
+        <div class="overlay-content">
+            <h3>Add New Member</h3>
+            <label for="member-domain-id">Enter Member Domain ID</label>
+            <input type="text" id="member-domain-id"><br><br>
+            <label for="password">Enter Your Password</label>
+            <input type="password" id="password"><br><br>
+            <button class="profile-button" onclick="validateAndAddMember()">Continue</button>
+            <button onclick="hideAddMemberOverlay()">Close</button>
+        </div>
+    </div>
+
+    <!-- Confirmation overlay -->
+    <div class="overlay" id="confirm-overlay">
+        <div class="overlay-content">
+            <h3>Confirm Domain Information</h3>
+            <p>Domain ID: <span id="confirm-domain-id"></span></p>
+            <p>Domain Name: <span id="confirm-domain-name">Grover</span> <img src="edit-icon.png" class="edit-icon" style="cursor: pointer; width: 20px; height: 20px;" onclick="editDomainName()"></p>
+            <button class="profile-button" style="background-color: green;" onclick="authorizeDomainAddition()">Authorize</button>
+            <button onclick="hideConfirmOverlay()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Set user profile picture and name
+        document.getElementById('user-profile-picture').style.backgroundImage = `url('path/to/your/image.jpg')`;
+        document.getElementById('user-name').textContent = localStorage.getItem('userDomainId') || 'User Domain ID';
+
+        function sortTable(order) {
+            const table = document.getElementById('community-list').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            if (order === 'alpha') {
+                rows.sort((a, b) => {
+                    const domainA = a.cells[0].textContent.toLowerCase();
+                    const domainB = b.cells[0].textContent.toLowerCase();
+                    return domainA.localeCompare(domainB);
+                });
+            }
+
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        // Show add member link only if not on profile page
+        if (window.location.pathname !== '/profile.html') {
+            document.getElementById('add-member-link').style.display = 'block';
+        }
+
+        function showAddMemberOverlay() {
+            document.getElementById('add-member-overlay').style.display = 'flex';
+        }
+
+        function hideAddMemberOverlay() {
+            document.getElementById('add-member-overlay').style.display = 'none';
+        }
+
+        function validateAndAddMember() {
+            const memberId = document.getElementById('member-domain-id').value;
+            const password = document.getElementById('password').value;
+            const memberIdPattern = /^F[0-9]{1,3}[SPG][R][0-9]{1,3}$/;
+
+            if (!memberIdPattern.test(memberId)) {
+                alert('Domain ID not in our records');
+                return;
+            }
+
+            if (password !== '11Mia0$NBP') {
+                alert('Password not in our records');
+                return;
+            }
+
+            // Show confirmation overlay
+            document.getElementById('confirm-domain-id').textContent = memberId;
+            hideAddMemberOverlay();
+            showConfirmOverlay();
+        }
+
+        function showConfirmOverlay() {
+            document.getElementById('confirm-overlay').style.display = 'flex';
+        }
+
+        function editDomainName() {
+            const newDomainName = prompt('Enter new Domain Name:', document.getElementById('confirm-domain-name').textContent);
+            if (newDomainName && newDomainName.length <= 15) {
+                document.getElementById('confirm-domain-name').textContent = newDomainName;
+            } else if (newDomainName && newDomainName.length > 15) {
+                alert('Name too long, please try again');
+            }
+        }
+
+        function hideConfirmOverlay() {
+            document.getElementById('confirm-overlay').style.display = 'none';
+        }
+
+        function authorizeDomainAddition() {
+            const domainId = document.getElementById('confirm-domain-id').textContent;
+            const domainName = document.getElementById('confirm-domain-name').textContent;
+            addMemberToTable(domainId, domainName);
+            hideConfirmOverlay();
+        }
+
+        function addMemberToTable(domainId, domainName) {
+            const table = document.getElementById('community-list').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const domainNameCell = newRow.insertCell(0);
+            const actionCell = newRow.insertCell(1);
+            const domainIdCell = newRow.insertCell(2);
+
+            domainNameCell.innerHTML = domainName;
+            actionCell.innerHTML = ['Buying', 'Selling', 'Both'][Math.floor(Math.random() * 3)];
+            domainIdCell.innerHTML = domainId;
+        }
+    </script>
+</body>
+</html>

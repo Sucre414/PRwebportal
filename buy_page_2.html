@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSequence_2</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        .buy-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            cursor: pointer;
+        }
+        .input-error {
+            border: 2px solid red;
+        }
+        .error-message {
+            color: red;
+        }
+        .buy-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-top: 10px;
+            margin-left:30px;
+        }
+        .progress-bars {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .bar {
+            width: 20px;
+            height: 5px;
+            background-color: lightgray;
+        }
+        .bar.filled {
+            background-color: blue;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="navigation">
+            <div class="buy-progress">
+                <h2>Buy</h2>
+                <div class="progress-bars">
+                    <div class="bar filled"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buy-container">
+        <h1>BUY</h1>
+        <div>
+            <label for="spendLimit">Enter Spend Limit (₦)</label>
+            <input type="number" id="spendLimit" />
+            <p id="spendLimitError" class="error-message"></p>
+        </div>
+        <h2 id="sellersHeading" style="display: none;">Rookery Approved Sellers</h2>
+        <table id="clientTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Sellers</th>
+                    <th onclick="sortTable(1)">Power ▼ </th>
+                </tr>
+            </thead>
+            <tbody id="clientTableBody">
+                <tr class="clickable-row" data-rate="3.63" data-client="ABB" data-link="buy_page_3.html"><td>ABB</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.50" data-client="WWT" data-link="buy_page_3.html"><td>WWT</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.35" data-client="DANGCEM" data-link="buy_page_3.html"><td>DANGCEM</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.00" data-client="World Market" data-link="buy_page_3.html"><td>World Market</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.04" data-client="UBA" data-link="buy_page_3.html"><td>UBA</td><td></td></tr>
+                <tr class="clickable-row" data-rate="3.00" data-client="Vista" data-link="buy_page_3.html"><td>Vista</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.10" data-client="Lucky P" data-link="buy_page_3.html"><td>Lucky P</td><td></td></tr>
+                <tr class="clickable-row" data-rate="2.25" data-client="F150SR15" data-link="buy_page_3.html"><td>F150SR15</td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const spendLimitInput = document.getElementById('spendLimit');
+        const spendLimitError = document.getElementById('spendLimitError');
+        const clientTable = document.getElementById('clientTable');
+        const clientTableBody = document.getElementById('clientTableBody');
+        const sellersHeading = document.getElementById('sellersHeading');
+
+        spendLimitInput.addEventListener('input', () => {
+            const spendLimit = parseFloat(spendLimitInput.value);
+            let valid = true;
+
+            // Validate spend limit
+            if (isNaN(spendLimit) || spendLimit <= 0) {
+                spendLimitError.textContent = 'Please enter a positive spend limit.';
+                spendLimitInput.classList.add('input-error');
+                valid = false;
+                clientTable.style.display = 'none';
+                sellersHeading.style.display = 'none';
+            } else {
+                spendLimitError.textContent = '';
+                spendLimitInput.classList.remove('input-error');
+                clientTable.style.display = 'table';
+                sellersHeading.style.display = 'block';
+            }
+
+            if (valid) {
+                // Calculate power for each client
+                Array.from(clientTableBody.children).forEach(row => {
+                    const rate = parseFloat(row.dataset.rate);
+                    const power = (spendLimit / rate).toFixed(2);
+                    row.children[1].innerHTML = '<b>' + power + '</b> kWh';
+                });
+            }
+        });
+
+        clientTableBody.addEventListener('click', (event) => {
+            const row = event.target.closest('tr');
+            const spendLimit = parseFloat(spendLimitInput.value);
+
+            if (row && row.classList.contains('clickable-row')) {
+                if (!isNaN(spendLimit) && spendLimit > 0) {
+                    // Save client name, price, and spend limit to local storage
+                    const clientName = row.dataset.client;
+                    const clientPrice = row.children[1].textContent;
+                    localStorage.setItem('selectedClientName', clientName);
+                    localStorage.setItem('selectedClientPrice', clientPrice);
+                    localStorage.setItem('spendLimit', spendLimit);
+
+                    if (row.dataset.link) {
+                        window.location.href = row.dataset.link;
+                    }
+                } else {
+                    spendLimitError.textContent = 'Please enter a valid spend limit before selecting a client.';
+                }
+            }
+        });
+
+        function sortTable(n) {
+            const rows = Array.from(clientTableBody.rows);
+            const isAscending = rows[0].children[n].textContent > rows[rows.length - 1].children[n].textContent;
+            rows.sort((a, b) => {
+                const aValue = parseFloat(a.children[n].textContent) || 0;
+                const bValue = parseFloat(b.children[n].textContent) || 0;
+                return isAscending ? bValue - aValue : aValue - bValue;
+            });
+            clientTableBody.innerHTML = '';
+            rows.forEach(row => clientTableBody.appendChild(row));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSequence_Preliminary_Receipt</title>
+    
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+        }
+        .preliminary-receipt {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .receipt-table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        .receipt-table th, .receipt-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .receipt-table th {
+            background-color: #f2f2f2;
+        }
+        .home-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            width: 100px;
+        }
+        .sell-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-top: 10px;
+            margin-left:30px;
+        }
+        .progress-bars {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .bar {
+            width: 20px;
+            height: 5px;
+            background-color: lightgray;
+        }
+        .bar.filled {
+            background-color: blue;
+        }
+    </style>
+
+    <div class="header">
+        <div class="navigation">
+            <div class="sell-progress">
+                <h2>Sell</h2>
+                <div class="progress-bars">
+                    <div class="bar filled"></div>
+                    <div class="bar filled"></div>
+                    <div class="bar filled"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="preliminary-receipt">
+        <h1>Preliminary Receipt</h1>
+        <p>Your trade instructions have been received. Thank you for conducting your business with us.</p>
+        <p>You shall receive a final receipt in the profile section of your account.</p>
+    </div>
+
+    <table class="receipt-table">
+        <tr>
+            <th>User Domain ID</th>
+            <td id="userDomainId"></td>
+        </tr>
+        <tr>
+            <th>Recipient Domain ID</th>
+            <td id="recipientDomainId"></td>
+        </tr>
+        <tr>
+            <th>Exchange</th>
+            <td id="exchangePrice"></td>
+        </tr>
+        <tr>
+            <th>Fees</th>
+            <td>
+                <table>
+                    <tr>
+                        <th>Distance fee</th>
+                        <td id="distanceFee"></td>
+                    </tr>
+                    <tr>
+                        <th>Taxes</th>
+                        <td id="taxes"></td>
+                    </tr>
+                    <tr>
+                        <th>Market fee</th>
+                        <td id="marketFee"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th>Final Price</th>
+            <td id="finalPrice"></td>
+        </tr>
+    </table>
+
+    <a href="homepage.html" class="home-button">HOME</a>
+
+    <script>
+        // Retrieve data from local storage
+        const userDomainId = localStorage.getItem('finalUserDomainId');
+        const recipientDomainId = localStorage.getItem('finalRecipientDomainId');
+        const exchangePrice = localStorage.getItem('finalExchangePrice');
+        const distanceFee = localStorage.getItem('finalDistanceFee');
+        const taxes = localStorage.getItem('finalTaxes');
+        const marketFee = localStorage.getItem('finalMarketFee');
+        const finalPrice = localStorage.getItem('finalPrice');
+
+        // Set the content for each field
+        document.getElementById('userDomainId').textContent = userDomainId;
+        document.getElementById('recipientDomainId').textContent = recipientDomainId;
+        document.getElementById('exchangePrice').textContent = exchangePrice;
+        document.getElementById('distanceFee').textContent = `₦${distanceFee}`;
+        document.getElementById('taxes').textContent = `₦${taxes}`;
+        document.getElementById('marketFee').textContent = `₦${marketFee}`;
+        document.getElementById('finalPrice').textContent = `₦${finalPrice}`;
+    </script>
+</body>
+</html>

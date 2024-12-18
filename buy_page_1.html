@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSequence_1</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        .buy-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .buy-container div {
+            margin-bottom: 15px;
+        }
+        #cautionBtn {
+            background-color: yellow;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #continueBtn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        #continueBtn:hover {
+            background-color: white;
+            color: green;
+        }
+        #continueBtn:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+        .input-error {
+            border: 2px solid red;
+        }
+        .error-message {
+            color: red;
+        }
+        .buy-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-top: 10px;
+            margin-left:30px;
+        }
+        .progress-bars {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .bar {
+            width: 20px;
+            height: 5px;
+            background-color: lightgray;
+        }
+        .bar.filled {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="navigation">
+            <div class="buy-progress">
+                <h2>Buy</h2>
+                <div class="progress-bars">
+                    <div class="bar filled"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buy-container">
+        <h1>BUY</h1>
+        <button id="cautionBtn"> No Recipient Domain ID? <strong><u>Click Here!</u></strong></button>
+        <div>
+            <label for="userDomainId">Enter your Domain ID</label>
+            <input type="text" id="userDomainId" />
+            <p id="userDomainError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="recipientDomainId">Enter recipient Domain ID</label>
+            <input type="text" id="recipientDomainId" />
+            <p id="recipientDomainError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="electricityAmount">Enter electricity Amount </label>
+            <input type="number" id="electricityAmount" min="50" max="200" />
+            <p id="electricityError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="spendLimit">Enter Spend Limit(₦) </label>
+            <input type="number" id="spendLimit" />
+            <p id="spendLimitError" class="error-message"></p>
+        </div>
+        <button id="continueBtn" disabled>Continue</button>
+    </div>
+
+    <script>
+        const cautionBtn = document.getElementById('cautionBtn');
+        const continueBtn = document.getElementById('continueBtn');
+        const userDomainInput = document.getElementById('userDomainId');
+        const recipientDomainInput = document.getElementById('recipientDomainId');
+        const electricityAmountInput = document.getElementById('electricityAmount');
+        const spendLimitInput = document.getElementById('spendLimit');
+
+        // Populate the Domain ID field with data from localStorage
+        const storedDomainId = localStorage.getItem('domainId');
+        if (storedDomainId) {
+            userDomainInput.value = storedDomainId;
+        }
+
+        // Enable or disable the continue button based on the conditions
+        function validateInputs() {
+            const recipientDomainId = recipientDomainInput.value.trim();
+            const electricityAmount = parseInt(electricityAmountInput.value);
+            const spendLimit = parseInt(spendLimitInput.value);
+
+            if (recipientDomainId === 'World Market' && electricityAmount === 100 && spendLimit === 200) {
+                continueBtn.disabled = false;
+            } else {
+                continueBtn.disabled = true;
+            }
+        }
+
+        recipientDomainInput.addEventListener('input', validateInputs);
+        electricityAmountInput.addEventListener('input', validateInputs);
+        spendLimitInput.addEventListener('input', validateInputs);
+
+        cautionBtn.addEventListener('click', () => {
+            window.location.href = 'buy_page_2.html'; // Redirect to buy_page_2
+        });
+
+        continueBtn.addEventListener('click', () => {
+            if (!continueBtn.disabled) {
+                window.location.href = 'buy_page_3.html'; // Redirect to buy_page_3
+            }
+        });
+    </script>
+</body>
+</html>

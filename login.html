@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #loginBtn, #forgotPasswordBtn, #continueBtn, #submitBtn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            margin: 10px;
+        }
+        #forgotPasswordBtn {
+            background-color: #007BFF;
+        }
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #extraSteps {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .login-container div, #extraSteps div {
+            margin-bottom: 15px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            z-index: 1000;
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes growShrink {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Rookery Web Services.</h2>
+        <div>
+            <label for="domainId">Enter Domain ID</label>
+            <input type="text" id="domainId" />
+            <p id="domainError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="password">Enter your Password</label>
+            <input type="password" id="password" />
+            <p id="passwordError" class="error-message"></p>
+        </div>
+        <button id="loginBtn">LOGIN</button>
+        <button id="forgotPasswordBtn">Forgot Password?</button>
+        <p id="callMessage" class="error-message"></p>
+    </div>
+
+    <div id="extraSteps">
+        <div>
+            <label for="domainName">Name your Domain</label>
+            <input type="text" id="domainName" />
+            <p id="domainNameError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="email">Enter Email</label>
+            <input type="text" id="email" />
+            <p id="emailError" class="error-message"></p>
+        </div>
+        <div>
+            <label for="phoneNumber">Enter Phone Number</label>
+            <input type="text" id="phoneNumber" />
+            <p id="phoneError" class="error-message"></p>
+        </div>
+        <button id="continueBtn">CONTINUE</button>
+    </div>
+
+    <div id="phoneOverlay" class="overlay hidden">
+        <p>Enter the code received on the phone number provided</p>
+        <input type="text" id="phoneCode" style="margin-bottom: 15px;" />
+        <br><br>
+        <button id="submitPhoneBtn" style="background-color: green; color: white;">SUBMIT</button>
+        <p id="overlayMessage"></p>
+    </div>
+
+    <div id="emailOverlay" class="overlay hidden">
+        <p>Enter the code received on your email</p>
+        <input type="text" id="emailCode" style="margin-bottom: 15px;" />
+        <br><br>
+        <button id="submitEmailBtn" style="background-color: green; color: white;">SUBMIT</button>
+        <p id="overlayMessage"></p>
+    </div>
+
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const domainInput = document.getElementById('domainId');
+        const passwordInput = document.getElementById('password');
+        const domainError = document.getElementById('domainError');
+        const passwordError = document.getElementById('passwordError');
+        const callMessage = document.getElementById('callMessage');
+        const extraSteps = document.getElementById('extraSteps');
+        const continueBtn = document.getElementById('continueBtn');
+        const domainNameInput = document.getElementById('domainName');
+        const emailInput = document.getElementById('email');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const domainNameError = document.getElementById('domainNameError');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+        const phoneOverlay = document.getElementById('phoneOverlay');
+        const emailOverlay = document.getElementById('emailOverlay');
+        const submitPhoneBtn = document.getElementById('submitPhoneBtn');
+        const submitEmailBtn = document.getElementById('submitEmailBtn');
+
+        let loginAttempts = 0;
+
+        loginBtn.addEventListener('click', () => {
+            const domainId = domainInput.value;
+            const password = passwordInput.value;
+            
+            if (domainId === 'F23PR16' && password === '11Mia0$NBP') {
+                // Store domain ID in local storage
+                try {
+                    localStorage.setItem('domainId', domainId);
+                } catch (e) {
+                    console.error('Failed to store domain ID:', e);
+                }
+                
+                // Step 1: Display a loading message
+                callMessage.textContent = 'Logging in... Please wait.';
+                
+                // Step 2: Simulate a delay before continuing
+                setTimeout(() => {
+                    callMessage.textContent = 'This is your first time logging in, Welcome to Rookery just a couple more steps.';
+                    extraSteps.style.display = 'flex';
+                }, 2000);
+            } else {
+                loginAttempts++;
+
+                if (domainId !== 'F23PR16') {
+                    domainError.textContent = 'Domain ID not in our records';
+                } else {
+                    domainError.textContent = '';
+                }
+
+                if (password !== '11Mia0$NBP') {
+                    passwordError.textContent = 'Password not in our records';
+                } else {
+                    passwordError.textContent = '';
+                }
+
+                if (loginAttempts >= 3) {
+                    callMessage.textContent = 'Give us a call: 800-966-7878';
+                }
+            }
+        });
+
+        continueBtn.addEventListener('click', () => {
+            const domainName = domainNameInput.value;
+            const email = emailInput.value;
+            const phoneNumber = phoneNumberInput.value;
+
+            let valid = true;
+
+            if (!email.includes('@')) {
+                emailError.textContent = 'Email invalid';
+                valid = false;
+            } else {
+                emailError.textContent = '';
+            }
+
+            if (phoneNumber.length > 11) {
+                phoneError.textContent = 'Number invalid';
+                valid = false;
+            } else {
+                phoneError.textContent = '';
+            }
+
+            if (valid) {
+                phoneOverlay.classList.remove('hidden');
+            }
+        });
+
+        submitPhoneBtn.addEventListener('click', () => {
+            const phoneCode = document.getElementById('phoneCode').value;
+            if (phoneCode === 'India((') {
+                phoneOverlay.classList.add('hidden');
+                emailOverlay.classList.remove('hidden');
+            } else {
+                alert('Invalid code. Please try again.');
+            }
+        });
+
+        submitEmailBtn.addEventListener('click', () => {
+            const emailCode = document.getElementById('emailCode').value;
+            if (emailCode === 'Korea(oo)') {
+                emailOverlay.classList.add('hidden');
+                callMessage.innerHTML = 'Congratulations <span style="color: gold;">&#x1F389;</span> Click the Login button to explore your Portal. We encourage you to go to your Settings located in your profile tab.';
+                continueBtn.remove();
+                forgotPasswordBtn.remove();
+                loginBtn.style.animation = 'growShrink 1.5s infinite';
+                loginBtn.addEventListener('click', () => { 
+                    window.location.href = 'homepage.html';
+                });
+
+                // Store user data
+                localStorage.setItem('domainId', domainInput.value);
+                localStorage.setItem('domainName', domainNameInput.value);
+                localStorage.setItem('email', emailInput.value);
+                localStorage.setItem('phoneNumber', phoneNumberInput.value);
+                localStorage.setItem('password', passwordInput.value);
+            } else {
+                alert('Invalid code. Please try again.');
+            }
+        });
+
+        forgotPasswordBtn.addEventListener('click', () => {
+            const email = prompt('Please enter your email address to reset your password. After that Give us a call: 800-966-7878');
+            if (email) {
+                // In a real implementation, you would send the email to your server here
+                alert('After we receive your call, the password reset link will be sent to ' + email);
+            }
+        });
+    </script>
+</body>
+</html>

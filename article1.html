@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 1</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+        /* Social media and bookmark styling */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>   
+
+    <script>
+        // Bookmark functionality
+        const bookmarkIcon = document.getElementById('bookmark-icon');
+        const articleId = 'article1'; // Unique identifier for this article
+
+        // Check if the article is already bookmarked
+        if (localStorage.getItem(articleId) === 'bookmarked') {
+            bookmarkIcon.style.filter = 'brightness(1.5)'; // Highlight the bookmark icon if bookmarked
+        }
+
+        bookmarkIcon.addEventListener('click', () => {
+            if (localStorage.getItem(articleId) === 'bookmarked') {
+                localStorage.removeItem(articleId);
+                bookmarkIcon.style.filter = 'brightness(1)'; // Remove highlight
+            } else {
+                localStorage.setItem(articleId, 'bookmarked');
+                bookmarkIcon.style.filter = 'brightness(1.5)'; // Highlight the bookmark icon
+            }
+        });
+    </script>
+    <!-- Embedded Article -->
+    
+    <!-- Article Content -->
+    <div class="article-content" style="margin: 40px auto; max-width: 80%; text-align: left;">
+        <h1>The Data Center Energy Tri-lemma: Matching Unprecedented Growth with Sustainability</h1>
+        <p>The growth projections do seem overwhelming to many, although exciting to those who believe the growth of artificial intelligence (AI) and cloud-based services will be highly positive economic drivers in the future. Data center capacity in the U.S. should double from 2022 to almost 40 GW by 2030.</p>
+        <p><strong>Red Watson, Energy Tech Managing Editor</strong></p>
+        <p>Sep 15, 2024</p>
+        <br>
+    <!-- Social Media and Bookmark Icons -->
+    <div class="social-icons">
+        <img src="path/to/bookmark-icon.png" alt="Bookmark" id="bookmark-icon" class="social-icon" style="width: 100%; height: auto; margin-top: -50px;">
+        <img src="path/to/facebook-icon.png" alt="Facebook" class="social-icon" style="width: 100%; height: auto; margin-top: -50px;">
+        <img src="path/to/linkedin-icon.png" alt="LinkedIn" class="social-icon" style="width: 100%; height: auto; margin-top: -50px;">
+        <img src="path/to/twitter-icon.png" alt="Twitter" class="social-icon" style="width: 100%; height: auto; margin-top: -50px;">
+        <img src="path/to/reddit-icon.png" alt="Reddit" class="social-icon" style="width: 100%; height: auto; margin-top: -50px;">
+    </div>
+        <img src="path/to/article-image.jpg" alt="Data Center Image" style="width: 100%; height: auto; margin-top: 20px;">
+        <h2>The data center trilemma: Energy, costs, and sustainability.</h2>
+        <p>What's happening at the crossroads of data center growth and energy capacity sometimes looks like a race to the top and sometimes like a crash waiting to happen.</p>
+        <p>Imagine rack density accelerating to where the distribution voltage might rise from 480V to 600V and beyond. Imagine a 1-GW supercomputer on the near horizon. Imagine the electric power capacity of Arizona, which took more than 100 years to reach 1 GW, doubling in the short term just to satisfy new data center construction that will need twice again that much power in only a few more years.</p>
+        <p>It’s all smoke at the rim. Thus, it’s not so hard to imagine fear and trepidation among utilities and developers alike. Numbers targeting nine known future scenarios.</p>
+        <p>Thursday's early sessions at the <a href="https://www.dcftrends.com/2024/home?ref=DCF_Web&utm_source=DCF_Web&utm_medium=DCF_Web&utm_campaign=DCF_Web&utm_id=DCF_Web">Data Center Frontier Trends Summit</a> featured panels taking that fear and trepidation head on. The first-ever Trends Summit at the Hyatt Regency in Reston, Virginia — a state which is home to more data center capacity than any other — focused on ways forward into a future that’s moving faster than ever thought possible.</p>
+        <p>“We don’t have all the answers yet,” Vince Peterson, global solutions architect at Schneider Electric, said during the keynote Thursday. “My crystal ball tells me we’ve got to find those answers.”</p>
+        <p>The growth projections do seem overwhelming to many, although exciting to those who believe the growth of artificial intelligence (AI) and cloud-based services will be highly positive economic drivers in the future. In a host of mega-scale versions of Moore's Law, data center capacity in the U.S. should double from 2022 to almost 40 GW by 2030.</p>
+        <p>Forty-plus GW of the same as dates to one new nuclear power station, or 80 gas-fired turbines. It’s equal to more than 300,000 acres of additional solar farms.</p>
+        <p><strong>The data center trilemma: Energy, costs, and sustainability.</strong></p>
+        <img src="path/to/article-image.jpg" alt="Siemens" style="width: 100%; height: auto; margin-top: 20px;">
+        <p>The environmental challenge is hard to fathom, as data centers require not only tremendous amounts of energy, but also water for cooling and land for siting. These are growth projections that utilities did not foresee until only a few years ago.</p>
+        <p>“The utilities are getting scared,” Karen Peterson, vice president of development and construction for PowerHouse Data Centers, said in another Trends Summit session. “They’re getting mature and also scared. They see what’s happening.”</p>
+        <p><a href="#">One power giant</a> such as Amazon, Microsoft, and Meta are contributing a large part through <a href="https://www.energytech.com/search?filters={%22text%22:%22data%20center%22,%22type%22:{%22value%22:[]},%22websiteSchedule%22:{%22value%22:[]},%22page%22:1}&page=1">long-term renewable energy power purchase agreements.</a> These PPAs do not usually power the data centers directly, but the billions invested by the tech three-rick projects and massive deployments into the utility-scale grid.</p>
+        <p>So, what can be done about a power “trilemma,” as Ciaran Flanagan, global head of data centers for Siemens, termed the balancing of the need for reliable energy, excess cost and sustainability issues? In some cases, industry leaders are walking back some of their earlier and lofty decarbonization promises, but others see hope in different ways of satisfying the insatiable energy demand coming from the AI and cloud-based upsurge.</p>
+        <p>One of the ways, which could involve a greater shift to microgrids for dedicated on-site power, is shifting from alternating current to direct current (DC). Ciaran Sharp, chief technical officer for project developer Digital Realty, said in the keynote. Direct current could facilitate a more efficient and different means of integrating renewable energy and hybrid resources such as solar and storage combinations.</p>
+        <p>“It has to be so,” Sharp pointed out. “DC is in the projection.”</p>
+        <p>This support for DC echoes recent conclusions made by <a href="https://www.microgridknowledge.com/about-microgrids/article/33011503/critical-load-name-of-the-microgrid-game-at-re">microgrid experts last year at the massive RE+ conference</a> in Las Vegas. DC is more efficient when generation is close to the load, proponents say.</p>
+        <p>Overcoming interconnection queues and workforce challenges</p>
+        <p>Investors are seeing efficiency front and how global any dividends in handling the data center expansion in a safe and productive matter. New ways of exploring and utilizing excess heat could pave the way for more efficient data and safe data centers.</p>
+        <p>Interconnection itself is maturing and standardization in data center construction could enable greater efficiencies in microgrids and interconnecting projects. McClean, principal at Critical Facilities Group, offered. Otherwise, the current workforce shortage makes some of these developments pale in possibilities.</p>
+        <p>“There’s only so much vision we can do right now,” McClean said. “We’ve got a people problem here in construction and the energy grid foundation to do the stuff we’re trying to do right now.”</p>
+        <p>Finding the way forward to match data center IT</p>
+        <p>Of all this, there is cautious disbelief, based on among industry veterans at the Data Center Frontier Trends Summit. The confidence is still high that they will be solved through focus and determination.</p>
+        <p>“AI is happening,” Peterson added. “Data centers are happening, as them go and spin with the most energy to happen.” Peterson said.</p>
+        <p>The regulatory loops are, because matched by the unprecedented growth of AI and its potential for bad, but opportunities are needed to be helpful on both the size not into the projection of the future energy grid needs.</p>
+        <p>However, as evidenced by the new power projects in planning for behind-the-meter power, as everyone, is already several years long. Next steps will take maturity and capital to push it along fast — and greater new entries could enable more of the needed dispatchable microgrids and make things happen.</p>
+        <p>Not saying the data centers on this segment, though, is not an option. AI is happening. Data centers are happening, and the energy supply side must evolve and expand to make it happen.</p>
+        <p>Minds are blown now, but the consensus at the Data Center Frontier Trends Summit is that they will re-form and unite anew to think of ways to make it happen.</p>
+        <p><a href="https://www.energytech.com/distributed-energy/article/55138012/the-data-center-tri-lemma-matching-unprecedented-growth-with-sustainability?o_eid=8359D2519989H3C&oly_enc_id=8359D2519989H3C&rdx.ident[pull]=omeda|8359D2519989H3C&utm_campaign=CPS240905129&utm_medium=email&utm_source=ET+Transition">Content borrowed from the Energy Tech Newsletter</a></p>
+    </div>
+</body>
+</html>
+</html>

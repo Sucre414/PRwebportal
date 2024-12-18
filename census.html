@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+
+       /* General styling for the navigation links */
+       .navigation-links {
+            float: left;
+            width: 15%;
+            margin-left: 20px;
+            margin-top: 85px;
+        }
+
+        .navigation-links a {
+            display: block;
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .navigation-links a:hover {
+            color: #5002f9;
+        }
+
+        /* Profile Picture and Name styling */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d0d0d0;
+            background-image: url('path/to/your/image.jpg');
+            background-size: cover;
+            background-position: center;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        /* Overlay styling */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .overlay-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+        }
+
+        .view-button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 5px 5px;
+            cursor: pointer;
+        }
+
+        .view-button:hover {
+            background-color: darkblue;
+        }
+
+        .dropdown-menu {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 440px; /* Set wider width for the dropdown menu */
+        }
+
+        /* Dropdown button styling */
+        .dropdown-button {
+            font-weight: bold; /* Make the text bold */
+            font-size: 1.2em; /* Set a consistent font size */
+            color: #333;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        #dropdownMenuButton .dropdown-icon {
+            font-size: 0.8em;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .delete-btn .trash-icon {
+            content: url('https://img.icons8.com/material-rounded/24/000000/delete-forever.png');
+        }
+
+        /* Center dropdown container styling */
+        .dropdown-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dropdown-menu table {
+            width: 100%;
+            text-align: center;
+        }
+
+        .dropdown-menu td {
+            padding: 5px;
+        }
+
+        .trash-icon {
+            cursor: pointer;
+            color: red;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-picture" id="user-profile-picture" style="background-image: url('path/to/your/image.jpg');"></div>
+        <h4 id="user-name"></h4>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set User Domain ID dynamically from local storage
+            const domainName = localStorage.getItem('domainName') || 'User Domain ID';
+            document.getElementById('user-name').textContent = domainName;
+        });
+    </script>
+
+    <div class="navigation-links" style="float: left; width: 10%; margin-left: 20px; margin-top: 120px;">
+        <a href="profile.html">Community List</a><br>
+        <div id="add-member-link" style="display: none;">
+            <a href="#" onclick="showAddMemberOverlay()">Add New Member</a><br>
+        </div>
+        <a href="badges.html">Badges</a><br>
+        <a href="messages.html">Messages</a><br>
+        <a href="census.html">Census</a><br>
+        <a href="settings.html">Settings</a><br>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 style="text-align: center; margin-top: 2px;">Census</h1>
+            <p style="text-align: center; margin-top: 10px;">To better serve you we need some information regarding the devices in your home. This empowers your Building and Battery Management system to work at their best and improve their predictions.</p>
+            <p style="text-align: center; margin-top: 10px;"><strong>Do not worry all data is handled on site.</strong></p>
+        </div>
+
+    <!-- Original Dropdown Menu -->
+    <div class="dropdown-container">
+        <div class="container mt-3" style="width: 80%;">
+            <div class="dropdown">
+                <button class="btn dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Core Domain Devices <span class="dropdown-icon" id="dropdownIconNew">&#x25BC;</span></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div id="coreDomainDevices" class="container">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>A/C(s) <button class="view-button" data-label="A/C(s)" onclick="openOverlay('A/C(s)')">View</button></td>
+                                    <td>Electric Car(s) <button class="view-button" data-label="Electric Car(s)" onclick="openOverlay('Electric Car(s)')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Washer(s) <button class="view-button" data-label="Washer" onclick="openOverlay('Washer')">View</button></td>
+                                    <td>Television(s) <button class="view-button" data-label="Television(s)" onclick="openOverlay('Television(s)')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Water Heater(s) <button class="view-button" data-label="Water Heater" onclick="openOverlay('Water Heater')">View</button></td>
+                                    <td>Freezer(s) <button class="view-button" data-label="Freezer(s)" onclick="openOverlay('Freezer(s)')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Electric Stove(s) <button class="view-button" data-label="Electric Stove" onclick="openOverlay('Electric Stove')">View</button></td>
+                                    <td>Dehumidifier(s) <button class="view-button" data-label="Home Security" onclick="openOverlay('Home Security')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Air Purifier(s) <button class="view-button" data-label="Air Purifier" onclick="openOverlay('Air Purifier')">View</button></td>
+                                    <td>Dryer(s) <button class="view-button" data-label="Dryer" onclick="openOverlay('Dryer')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Dishwasher(s) <button class="view-button" data-label="Dishwasher" onclick="openOverlay('Dishwasher')">View</button></td>
+                                    <td>Fan(s) <button class="view-button" data-label="Fan" onclick="openOverlay('Fan')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Microwave(s) <button class="view-button" data-label="Microwave" onclick="openOverlay('Microwave')">View</button></td>
+                                    <td>Water Pump(s) <button class="view-button" data-label="Water Pump" onclick="openOverlay('Water Pump')">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dropdown Menu for Core Domain Occupants -->
+    <div class="dropdown-container">
+        <div class="container mt-3" style="width: 80%;">
+            <div class="dropdown">
+                <button class="btn dropdown-button" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Core Domain Occupants <span class="dropdown-icon" id="dropdownIconNew">&#x25BC;</span></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <div id="coreDomainOccupants" class="container">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><span>0-5 yrs</span> <button class="view-button" data-label="0-5 yrs" onclick="openOccupantOverlay('0-5 yrs')">View</button></td>
+                                    <td><span>5-10 yrs</span> <button class="view-button" data-label="5-10 yrs" onclick="openOccupantOverlay('5-10 yrs')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span>10-15 yrs</span> <button class="view-button" data-label="10-15 yrs" onclick="openOccupantOverlay('10-15 yrs')">View</button></td>
+                                    <td><span>15-30 yrs</span> <button class="view-button" data-label="15-30 yrs" onclick="openOccupantOverlay('15-30 yrs')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span>30-70 yrs</span> <button class="view-button" data-label="30-70 yrs" onclick="openOccupantOverlay('30-70 yrs')">View</button></td>
+                                    <td><span>> 70 yrs</span> <button class="view-button" data-label="> 70 yrs" onclick="openOccupantOverlay('> 70 yrs')">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Updated Dropdown Menu for Other Devices -->
+    <div class="dropdown-container">
+        <div class="container mt-3" style="width: 80%;">
+            <div class="dropdown">
+                <button class="btn dropdown-button" type="button" id="dropdownMenuButtonNew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Other Devices <span class="dropdown-icon" id="dropdownIconNew">&#x25BC;</span></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonNew">
+                    <div id="otherDevicesContainer" class="container">
+                        <!-- List of devices will be dynamically added here -->
+                    </div>
+                    <div class="text-center mt-2">
+                        <button class="btn btn-primary" id="addDeviceButton" onclick="openAddDeviceOverlay()">
+                            <span class="plus-icon">+</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay for Adding New Device -->
+    <div class="overlay" id="addDeviceOverlay">
+        <div class="overlay-content">
+            <h4>Add New Device</h4>
+            <form id="add-device-form">
+                <div class="form-group">
+                    <label for="device-name">Device Name:</label>
+                    <input type="text" class="form-control" id="device-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="device-serial">Serial Number:</label>
+                    <input type="text" class="form-control" id="device-serial" required>
+                </div>
+                <div id="additional-serial-numbers"></div>
+                
+                <button type="button" id="submit-new-device" class="btn btn-success mt-3">Submit</button>
+                <button type="button" id="close-add-device-overlay" class="btn btn-danger mt-3">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAddDeviceOverlay() {
+            // Reset the form fields and remove additional serial number fields
+            $('#device-name').val('');
+            $('#device-serial').val('');
+            $('#additional-serial-numbers').empty();
+            $('#submit-new-device').off('click').on('click', addNewDevice);
+            $('#addDeviceOverlay').fadeIn();
+        }
+
+        function renderDeviceList() {
+            $('#otherDevicesContainer').empty();
+            const storedDevices = JSON.parse(localStorage.getItem('otherDevices')) || [];
+            storedDevices.forEach((device, index) => {
+                const deviceHTML = `
+                    <div class="device-item" data-index="${index}">
+                        <span>${device.name} (Serial: ${device.serial})</span>
+                        <i class="fas fa-edit edit-icon" onclick="editDevice(${index})"></i>
+                        <i class="fas fa-trash trash-icon" onclick="confirmDelete(${index})"></i>
+                    </div>`;
+                $('#otherDevicesContainer').append(deviceHTML);
+            });
+        }
+
+        function confirmDelete(index) {
+            const confirmation = prompt('Type DELETE to confirm deletion:');
+            if (confirmation === 'DELETE' || confirmation === 'delete' || confirmation === 'Delete') {
+                const storedDevices = JSON.parse(localStorage.getItem('otherDevices')) || [];
+                storedDevices.splice(index, 1);
+                localStorage.setItem('otherDevices', JSON.stringify(storedDevices));
+                renderDeviceList();
+            } else {
+                alert('Deletion cancelled. Please type DELETE to confirm.');
+            }
+        }
+
+        function editDevice(index) {
+            const storedDevices = JSON.parse(localStorage.getItem('otherDevices')) || [];
+            const device = storedDevices[index];
+            $('#device-name').val(device.name);
+            $('#device-serial').val(device.serial);
+            $('#additional-serial-numbers').empty();
+            $('#submit-new-device').off('click').on('click', function () {
+                storedDevices[index] = {
+                    name: $('#device-name').val().trim(),
+                    serial: $('#device-serial').val().trim(),
+                };
+                localStorage.setItem('otherDevices', JSON.stringify(storedDevices));
+                renderDeviceList();
+                $('#addDeviceOverlay').fadeOut();
+            });
+            $('#addDeviceOverlay').fadeIn();
+        }
+
+        function addNewDevice() {
+            const deviceName = $('#device-name').val().trim();
+            const deviceSerial = $('#device-serial').val().trim();
+            const storedDevices = JSON.parse(localStorage.getItem('otherDevices')) || [];
+            if (storedDevices.some(device => device.name === deviceName)) {
+                alert('Device name already exists. Please enter a unique device name.');
+                return;
+            }
+            if (storedDevices.some(device => device.serial === deviceSerial)) {
+                alert('Serial number already exists. Please enter a unique serial number.');
+                return;
+            }if (deviceName && deviceSerial) {
+                const allSerials = [deviceSerial];
+                allSerials.forEach(serial => {
+                    storedDevices.push({ name: deviceName, serial: serial });
+                });
+                localStorage.setItem('otherDevices', JSON.stringify(storedDevices));
+                renderDeviceList();
+                alert('New device added successfully.');
+                $('#addDeviceOverlay').fadeOut();
+            } else {
+                alert('Please enter both device name and serial number.');
+            }
+        }
+
+        $(document).ready(function () {
+            renderDeviceList();
+
+            // Close add device overlay
+            $('#close-add-device-overlay').click(function () {
+                $('#addDeviceOverlay').fadeOut();
+            }); 
+        });
+    </script>
+    <!-- Overlay for Device Details -->
+    <div class="overlay" id="deviceOverlay">
+        <div class="overlay-content">
+            <h4 id="device-overlay-title">Device Details</h4>
+            <form id="device-form">
+                <div id="input-fields-container">
+                    <!-- Input fields will be dynamically added here -->
+                </div>
+                <button type="button" id="add-input-field-button" class="btn btn-primary mt-3">Add Input Field</button>
+                <button type="submit" id="submit-device-details" class="btn btn-success mt-3">Submit</button>
+            </form>
+            <button type="button" id="close-device-overlay" class="btn btn-danger mt-3">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openOverlay(deviceLabel) {
+            $('#device-overlay-title').text('Device Details ' + deviceLabel);
+            $('#input-fields-container').empty();
+            loadStoredSerialNumbers(deviceLabel);
+            $('#deviceOverlay').fadeIn();
+        }
+
+        function loadStoredSerialNumbers(deviceLabel) {
+            const storedData = JSON.parse(localStorage.getItem('deviceData')) || {};
+            if (storedData[deviceLabel]) {
+                storedData[deviceLabel].forEach(serialNumber => {
+                    addInputField(deviceLabel, serialNumber);
+                });
+            } else {
+                addInputField(deviceLabel);
+            }
+        }
+
+        function addInputField(deviceLabel, value = '') {
+            const inputFieldHTML = `
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control serial-number-input" placeholder="Enter serial number of ${deviceLabel}" value="${value}">
+                    <div class="input-group-append">
+                        <span class="input-group-text trash-icon" onclick="confirmDelete(this)"><i class="fas fa-trash"></i></span>
+                    </div>
+                </div>`;
+            $('#input-fields-container').append(inputFieldHTML);
+        }
+
+        $(document).ready(function () {
+            $('#close-device-overlay').click(function () {
+                $('#deviceOverlay').fadeOut();
+            });
+
+            $('#add-input-field-button').click(function () {
+                const deviceLabel = $('#device-overlay-title').text().replace('Device Details ', '');
+                addInputField(deviceLabel);
+            });
+
+            $('#device-form').submit(function (e) {
+                e.preventDefault();
+                const deviceLabel = $('#device-overlay-title').text().replace('Device Details ', '');
+                const serialNumbers = [];
+                let isDuplicate = false;
+
+                $('.serial-number-input').each(function () {
+                    const value = $(this).val().trim();
+                    if (value) {
+                        if (serialNumbers.includes(value)) {
+                            alert('Duplicate serial number found: ' + value);
+                            isDuplicate = true;
+                            return false;
+                        }
+                        serialNumbers.push(value);
+                    }
+                });
+
+                if (isDuplicate) return;
+
+                const storedData = JSON.parse(localStorage.getItem('deviceData')) || {};
+                storedData[deviceLabel] = serialNumbers;
+                localStorage.setItem('deviceData', JSON.stringify(storedData));
+                alert('Device details saved successfully.');
+                $('#deviceOverlay').fadeOut();
+            });
+        });
+    </script>
+    <!-- Overlay for Domain Occupant Details -->
+    <div class="overlay" id="occupantOverlay">
+        <div class="overlay-content">
+            <h4 id="occupant-overlay-title">Domain Permanent Occupants</h4>
+            <form id="occupant-form">
+                <div class="form-group">
+                    <label for="occupant-number">Number of permanent occupant aged <span id="occupant-age-label"></span>:</label>
+                    <input type="number" class="form-control" id="occupant-number" min="0">
+                </div>
+                <button type="button" id="submit-occupant-details" class="btn btn-success mt-3">Submit</button>
+                <button type="button" id="close-occupant-overlay" class="btn btn-danger mt-3">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openOccupantOverlay(ageLabel) {
+            $('#occupant-age-label').text(ageLabel);
+            $('#occupantOverlay').fadeIn();
+        }
+
+        $(document).ready(function () {
+            $('#close-occupant-overlay').click(function () {
+                $('#occupantOverlay').fadeOut();
+            });
+
+            $('#submit-occupant-details').click(function () {
+                const ageLabel = $('#occupant-age-label').text();
+                const numberOfOccupants = $('#occupant-number').val();
+
+                if (numberOfOccupants !== '') {
+                    const storedData = JSON.parse(localStorage.getItem('occupantData')) || {};
+                    storedData[ageLabel] = numberOfOccupants;
+                    localStorage.setItem('occupantData', JSON.stringify(storedData));
+                    alert('Occupant details saved successfully.');
+                    $('#occupantOverlay').fadeOut();
+                } else {
+                    alert('Please enter a valid number of occupants.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

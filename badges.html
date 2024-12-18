@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Account Template</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General styling for the navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        .nav-links-button-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+        }
+
+        .nav-bar a:hover {
+            color: #000000;
+        }
+
+        /* Profile button styling */
+        .profile-button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4a00ff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-left: 60px;
+        }
+
+        .profile-button:hover {
+            transform: scale(1.15);
+        }
+
+        .profile-button:active {
+            background-color: #000000;
+        }
+        
+       /* General styling for the navigation links */
+       .navigation-links {
+            float: left;
+            width: 15%;
+            margin-left: 20px;
+            margin-top: 85px;
+        }
+
+        .navigation-links a {
+            display: block;
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .navigation-links a:hover {
+            color: #5002f9;
+        }
+
+        /* Profile Picture and Name styling */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d0d0d0;
+            background-image: url('path/to/your/image.jpg');
+            background-size: cover;
+            background-position: center;
+            margin-right: 20px;
+        }
+
+        .badges-section {
+            margin-left: 20%;
+            margin-top: 40px;
+        }
+
+        .badges-header {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .badges-description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 150px);
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .badge-item {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #000;
+            border-radius: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .badge-name {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .sign-out {
+            text-align: right;
+            margin-right: 30px;
+            margin-top: -50px;
+            font-weight: bold;
+        }
+
+        .sign-out a {
+            text-decoration: none;
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="homepage.html">ROOKERY</a>
+        <div class="nav-links-button-container">
+            <div class="nav-links">
+                <a href="activity.html">Activity</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="articles.html">Articles</a>
+            </div>
+            <button class="profile-button" onclick="window.location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-picture" id="user-profile-picture" style="background-image: url('path/to/your/image.jpg');"></div>
+        <h4 id="user-name"></h4>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set User Domain ID dynamically from local storage
+            const domainName = localStorage.getItem('domainName') || 'User Domain ID';
+            document.getElementById('user-name').textContent = domainName;
+        });
+    </script>
+
+    <div class="navigation-links">
+        <a href="profile.html">Community List</a><br>
+        <div id="add-member-link" style="display: none;">
+            <a href="#" onclick="showAddMemberOverlay()">Add New Member</a><br>
+        </div>
+        <a href="badges.html">Badges</a><br>
+        <a href="messages.html">Messages</a><br>
+        <a href="census.html">Census</a><br>
+        <a href="settings.html">Settings</a><br>
+    </div>
+
+    <div class="badges-section">
+        <h2 class="badges-header">Badges</h2>
+        <p class="badges-description">Challenge members in your community or participate in community challenges to win badges.</p>
+        <div class="badge-grid">
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+            <div class="badge-item">
+                <div class="badge-icon"></div>
+                <div class="badge-name">Badge name</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Functionality for adding a new member (if required in the future)
+        function showAddMemberOverlay() {
+            // Placeholder function for adding a new member
+            alert("Add member functionality coming soon!");
+        }
+
+        // Set user profile picture and name
+        document.getElementById('user-profile-picture').style.backgroundImage = `url('path/to/your/image.jpg')`;
+        document.getElementById('user-name').textContent = localStorage.getItem('userDomainId') || 'User Domain ID';
+    </script>
+</body>
+</html>
