@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity Page</title>
     <link rel="stylesheet" href="styles.css">
-
     <style>
         /* General styling for the navigation bar */
         .nav-bar {
@@ -133,6 +132,32 @@
             padding: 10px;
             border: 1px solid #ccc;
         }
+
+        /* Styling for the 6x4 table */
+        #hourly-table {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        #hourly-table th,
+        #hourly-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #hourly-table thead th {
+            border-bottom: 1px solid #000;
+        }
+
+        .sort-container {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 </head>
@@ -173,21 +198,50 @@
                 </tr>
             </thead>
             <tbody id="calendar-body">
-                <!-- Calendar days will be generated here -->
                 <tr>
-                    <td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
                 </tr>
                 <tr>
-                    <td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
                 </tr>
                 <tr>
-                    <td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
                 </tr>
                 <tr>
-                    <td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+                    <td>18</td>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>21</td>
+                    <td>22</td>
+                    <td>23</td>
+                    <td>24</td>
                 </tr>
                 <tr>
-                    <td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+                    <td>25</td>
+                    <td>26</td>
+                    <td>27</td>
+                    <td>28</td>
+                    <td>29</td>
+                    <td>30</td>
+                    <td>31</td>
                 </tr>
             </tbody>
         </table>
@@ -216,40 +270,112 @@
         <h2>Solar Production</h2>
         <div class="chart" style="background-color: #1a1a1a; display: flex; flex-direction: column; justify-content: center;">
             <div style="display: flex; height: 100%;">
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="sun-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     SUN
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="mon-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     MON
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="tue-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     TUE
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="wed-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     WED
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="thu-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     THU
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative;">
+                <div id="fri-header" style="flex: 1; border-right: 1px solid #444; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     FRI
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
-                <div style="flex: 1; text-align: center; color: #fff; position: relative;">
+                <div id="sat-header" style="flex: 1; text-align: center; color: #fff; position: relative; cursor: pointer;">
                     SAT
                     <p style="position: absolute; bottom: 10px; width: 100%; color: #fff; margin: 0;">00 kWh</p>
                 </div>
             </div>
-            
         </div>
     </div>
 
-    <div class="sort-container" style="text-align: center; margin-top: 20px;">
+    <table id="hourly-table">
+        <thead>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="2"></th>
+                <th colspan="2"></th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="hour-0">00:00</td>
+                <td id="kwh-0">kWh</td>
+                <td id="hour-6">06:00</td>
+                <td id="kwh-6">kWh</td>
+                <td id="hour-12">12:00</td>
+                <td id="kwh-12">kWh</td>
+                <td id="hour-18">18:00</td>
+                <td id="kwh-18">kWh</td>
+            </tr>
+            <tr>
+                <td id="hour-1">01:00</td>
+                <td id="kwh-1">kWh</td>
+                <td id="hour-7">07:00</td>
+                <td id="kwh-7">kWh</td>
+                <td id="hour-13">13:00</td>
+                <td id="kwh-13">kWh</td>
+                <td id="hour-19">19:00</td>
+                <td id="kwh-19">kWh</td>
+            </tr>
+            <tr>
+                <td id="hour-2">02:00</td>
+                <td id="kwh-2">kWh</td>
+                <td id="hour-8">08:00</td>
+                <td id="kwh-8">kWh</td>
+                <td id="hour-14">14:00</td>
+                <td id="kwh-14">kWh</td>
+                <td id="hour-20">20:00</td>
+                <td id="kwh-20">kWh</td>
+            </tr>
+            <tr>
+                <td id="hour-3">03:00</td>
+                <td id="kwh-3">kWh</td>
+                <td id="hour-9">09:00</td>
+                <td id="kwh-9">kWh</td>
+                <td id="hour-15">15:00</td>
+                <td id="kwh-15">kWh</td>
+                <td id="hour-21">21:00</td>
+                <td id="kwh-21">kWh</td>
+            </tr>
+            <tr>
+                <td id="hour-4">04:00</td>
+                <td id="kwh-4">kWh</td>
+                <td id="hour-10">10:00</td>
+                <td id="kwh-10">kWh</td>
+                <td id="hour-16">16:00</td>
+                <td id="kwh-16">kWh</td>
+                <td id="hour-22">22:00</td>
+                <td id="kwh-22">kWh</td>
+            </tr>
+            <tr>
+                <td id="hour-5">05:00</td>
+                <td id="kwh-5">kWh</td>
+                <td id="hour-11">11:00</td>
+                <td id="kwh-11">kWh</td>
+                <td id="hour-17">17:00</td>
+                <td id="kwh-17">kWh</td>
+                <td id="hour-23">23:00</td>
+                <td id="kwh-23">kWh</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="sort-container" style="text-align: center; margin-top: 20px; display: none;">
         <select id="sort-by">
             <option value="asc">Sort By (Ascending)</option>
             <option value="desc">Sort By (Descending)</option>
@@ -261,14 +387,16 @@
         <table style="width: 80%; margin: 0 auto; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th style="border-bottom: 1px solid #000; padding: 10px;">Device</th>
+                    <th colspan="3"></th>
+                </tr>
+                <tr>
+                    <th style="border-bottom: 1px solid #000; padding: 10px;">Device/Outlet #</th>
                     <th style="border-bottom: 1px solid #000; padding: 10px;">Power Draw</th>
                     <th style="border-bottom: 1px solid #000; padding: 10px;">Port #</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Rows will be dynamically filled -->
-            </tbody>
+                </tbody>
         </table>
     </div>
 
@@ -281,8 +409,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Rows will be dynamically filled -->
-            </tbody>
+                </tbody>
         </table>
     </div>
 
@@ -292,9 +419,14 @@
         $(document).ready(function() {
             const calendar = $('#calendar');
             const yearInput = $('#year-input');
+            const hourlyTable = $('#hourly-table');
+            const deviceTable = $('#device-table');
+            const chartHeaders = ['sun-header', 'mon-header', 'tue-header', 'wed-header', 'thu-header', 'fri-header', 'sat-header'];
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const sortAndSearch = $('.sort-container');
 
             // Show calendar when the 'Today' button is clicked
-            $('#today-button').on('click', function () {
+            $('#today-button').on('click', function() {
                 calendar.toggle();
             });
 
@@ -347,6 +479,53 @@
                     });
                 }
             });
+
+            let kWhFilterSelected = false;
+            // Event listener for the radio buttons
+            $('input[name="filter"]').on('change', function() {
+                if (this.value === 'kWh Usage') {
+                    kWhFilterSelected = true;
+                    //Make the chart headers clickable
+                    chartHeaders.forEach((headerId, index) => {
+                        $(`#${headerId}`).css('cursor', 'pointer').on('click', () => {
+                            handleHeaderClick(index);
+                        });
+                    });
+                    deviceTable.hide(); // Hide the device table when kWh Usage is selected.
+                    sortAndSearch.hide();
+                } else {
+                    kWhFilterSelected = false;
+                    chartHeaders.forEach((headerId) => {
+                        $(`#${headerId}`).css('cursor', 'default').off('click');
+                    });
+                    hourlyTable.hide();
+                    deviceTable.hide();
+                    sortAndSearch.hide();
+                }
+            });
+
+            function handleHeaderClick(dayIndex) {
+                if (!kWhFilterSelected) return;
+
+                hourlyTable.find('thead th').text(days[dayIndex]);
+                hourlyTable.show();
+                deviceTable.hide();
+                sortAndSearch.hide(); // Hide sort and search initially
+
+                //Remove old event listeners.
+                for (let i = 0; i < 24; i++) {
+                    $(`#hour-${i}`).off('click');
+                }
+                // Add event listeners to the hour cells
+                for (let i = 0; i < 24; i++) {
+                    $(`#hour-${i}`).on('click', () => {
+                        deviceTable.find('thead tr:first-child th').attr('colspan', 3).text(days[dayIndex] + " " + $(`#hour-${i}`).text());
+                        deviceTable.find('thead tr:nth-child(2)').show();
+                        deviceTable.show();
+                        sortAndSearch.show(); // Show sort and search when an hour cell is clicked
+                    });
+                }
+            }
         });
     </script>
 </body>
